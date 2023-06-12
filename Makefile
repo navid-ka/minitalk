@@ -6,7 +6,7 @@
 #    By: nkeyani- < nkeyani-@student.42barcelona    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/08 15:03:56 by nkeyani-          #+#    #+#              #
-#    Updated: 2023/06/12 17:10:16 by nkeyani-         ###   ########.fr        #
+#    Updated: 2023/06/12 17:25:31 by nkeyani-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,10 +21,10 @@ COLOR = \033[32m
 KAOMOJI_SUCCESS = (づ ᴗ _ᴗ)づ♡
 KAOMOJI_REMOVE = (ノಠ益ಠ)ノ彡┻━┻
 
-server: ${OBJECTS} 
+server: make_lib ${OBJECTS} 
 	@cc ${CFLAGS} ${OBJECTS_SRV} -o ${SERVER}
 	@printf "$(COLOR)Server program compiled successfully!$(COLOR_RESET)\n"
-client: ${OBJECTS} 
+client: make_lib ${OBJECTS} 
 	@cc ${CFLAGS} ${OBJECTS_CLNT} -o ${CLIENT}
 	@printf "$(COLOR)Client program compiled successfully!$(COLOR_RESET)\n"
 

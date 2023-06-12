@@ -6,7 +6,7 @@
 /*   By: nkeyani- < nkeyani-@student.42barcelona    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 11:22:31 by nkeyani-          #+#    #+#             */
-/*   Updated: 2023/06/12 17:19:09 by nkeyani-         ###   ########.fr       */
+/*   Updated: 2023/06/12 19:51:08 by nkeyani-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,24 +19,22 @@ static char	*error_msg(char *s)
 	exit(-1);
 }
 
-static void	signal_handler(int sig)
+void handler(int signal)
 {
-	if (sig == SIGUSR2)
-		ft_printf("%p", sig);
-	else
-		error_msg("received unexpected signal");
+	
 }
 
-int	main(int argc, char **argv)
+int	main(void)
 {
-	(void)argc;
-	(void)argv;
-	if (signal(SIGUSR2, signal_handler) == SIG_ERR)
+	if (signal(SIGUSR1, signal_handler) == -1)
+		error_msg("can't catch SIGUSR1");
+	if (signal(SIGUSR2, signal_handler) == -1)
 		error_msg("can't catch SIGUSR2");
+	ft_printf("PID of server: %d\n", getpid());
 	while (1)
-	{
-		ft_printf("PID of server: \n%d", getpid());
-		sleep(10);
+        signal(SIGUSR1, signal_handler);
+        signal(SIGUSR2, signal_handler);
+        pause();
 	}
 	return (0);
 }
