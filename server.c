@@ -6,7 +6,7 @@
 /*   By: nkeyani- < nkeyani-@student.42barcelona    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 11:22:31 by nkeyani-          #+#    #+#             */
-/*   Updated: 2023/06/12 19:51:08 by nkeyani-         ###   ########.fr       */
+/*   Updated: 2023/06/15 12:34:57 by nkeyani-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,15 @@ static char	*error_msg(char *s)
 	exit(-1);
 }
 
-void handler(int signal)
+static unsigned char	*print_bits(int *bits)
 {
-	
+	int	i;
+
+	i = 8
+	while (i--)
+	{
+		if (SIGUSR1 == 1)
+	}
 }
 
 int	main(void)
@@ -32,9 +38,10 @@ int	main(void)
 		error_msg("can't catch SIGUSR2");
 	ft_printf("PID of server: %d\n", getpid());
 	while (1)
-        signal(SIGUSR1, signal_handler);
-        signal(SIGUSR2, signal_handler);
-        pause();
+	{
+		signal(SIGUSR1, signal_handler);
+		signal(SIGUSR2, signal_handler);
+		pause();
 	}
 	return (0);
 }

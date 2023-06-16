@@ -6,7 +6,7 @@
 /*   By: nkeyani- < nkeyani-@student.42barcelona    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 11:22:26 by nkeyani-          #+#    #+#             */
-/*   Updated: 2023/06/12 19:36:19 by nkeyani-         ###   ########.fr       */
+/*   Updated: 2023/06/15 12:32:42 by nkeyani-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 static void	signal_handler(int sig)
 {
 	if (sig == SIGUSR1)
-		ft_printf("%d", sig);
+		kill(SIGUSR1, sig);
 	if (sig == SIGUSR2)
-		ft_printf("%d", sig);
+		kill(SIGUSR2, sig);
 	else
 		error_msg("received unexpected signal");
 }
