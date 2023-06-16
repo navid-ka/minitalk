@@ -6,7 +6,7 @@
 /*   By: nkeyani- < nkeyani-@student.42barcelona    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 11:22:26 by nkeyani-          #+#    #+#             */
-/*   Updated: 2023/06/16 16:19:30 by nkeyani-         ###   ########.fr       */
+/*   Updated: 2023/06/16 16:43:37 by nkeyani-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,15 @@ void	send_sig(int pid, int sig)
 	usleep(100);
 }
 
-void	send_bits(const int pid, char c, int bits)
+void	send_bits(const int pid, char c, int octet)
 {
-	while (bits >= 0)
+	while (octet >= 0)
 	{
-		if (((c >> bits) & 1) == 1)
+		if (((c >> octet) & 1) == 1)
 			send_sig(pid, SIGUSR1);
 		else
 			send_sig(pid, SIGUSR2);
-		bits--;
+		octet--;
 		usleep(1100);
 	}
 	ft_printf("\n");

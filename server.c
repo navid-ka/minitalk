@@ -6,7 +6,7 @@
 /*   By: nkeyani- < nkeyani-@student.42barcelona    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 11:22:31 by nkeyani-          #+#    #+#             */
-/*   Updated: 2023/06/16 16:20:51 by nkeyani-         ###   ########.fr       */
+/*   Updated: 2023/06/16 16:43:03 by nkeyani-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,20 @@
 
 void	handler(int sig)
 {
-	static int				bits = 0;
+	static int				octet = 0;
 	static unsigned char	c = '\0';
 
-	c <<= 1;
+	c = c << 1;
 	if (sig == SIGUSR1)
-		c |= 1;
-	bits++;
-	if (bits == 8)
+		c =  c | 1;
+	octet++;
+	if (octet == 8)
 	{
 		if ((int)c <= 126)
 			ft_printf("%c", c);
 		else if ((int)c >= 127)
 			ft_printf("%c", c);
-		bits = 0;
+		octet = 0;
 		c = '\0';
 	}
 }
