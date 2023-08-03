@@ -6,7 +6,7 @@
 /*   By: nkeyani- < nkeyani-@student.42barcelona    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 11:22:26 by nkeyani-          #+#    #+#             */
-/*   Updated: 2023/06/16 16:43:37 by nkeyani-         ###   ########.fr       */
+/*   Updated: 2023/08/03 13:53:25 by nkeyani-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	send_sig(int pid, int sig)
 		ft_printf("No connection with server");
 		exit(EXIT_FAILURE);
 	}
-	usleep(100);
+	usleep(50);
 }
 
 void	send_bits(const int pid, char c, int octet)
@@ -32,7 +32,7 @@ void	send_bits(const int pid, char c, int octet)
 		else
 			send_sig(pid, SIGUSR2);
 		octet--;
-		usleep(1100);
+		usleep(50);
 	}
 	ft_printf("\n");
 }
