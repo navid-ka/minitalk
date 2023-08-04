@@ -6,71 +6,60 @@
 #    By: nkeyani- < nkeyani-@student.42barcelona    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/08 15:03:56 by nkeyani-          #+#    #+#              #
-#    Updated: 2023/07/23 19:19:20 by nkeyani-         ###   ########.fr        #
+#    Updated: 2023/08/04 18:13:07 by nkeyani-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SERVER = $(BINDIR)/server
-CLIENT = $(BINDIR)/client
-CFLAGS = -Wall -Werror -Wextra -MMD -L./$(LIBFT) libft/bin/libft.a -I./$(LIBFT)
-LIBFT= libft/
-SRCDIR = src
-OBJDIR = obj
-BINDIR = bin
-OBJECTS_SRV = server.c
-OBJECTS_CLNT = client.c
-COLOR_RESET = \033[0m
-COLOR = \033[32m
-KAOMOJI_SUCCESS = (づ ᴗ _ᴗ)づ♡
-KAOMOJI_REMOVE = (ノಠ益ಠ)ノ彡┻━┻
+SERVER = server
+CLIENT = client
+SERVER_BONUS = server_bonus
+CLIENT_BONUS = client_bonus
 
-SOURCES = $(OBJECTS_SRV) $(OBJECTS_CLNT)
-OBJECTS = $(patsubst $(SRCDIR)/%.c,$(OBJDIR)/%.o,$(SOURCES))
+CC = gcc
+CFLAGS = -Wall -Wextra -Werror
+RM = rm -rf
 
-DEPS = $(patsubst $(OBJDIR)/%.o,$(OBJDIR)/%.d,$(OBJECTS))
+LIBFT_PATH = ./libft
+LIBFT = $(LIBFT_PATH)/bin/libft.a
 
-$(OBJDIR)/%.o: $(SRCDIR)/%.c
-	@printf "$(COLOR)\rCompiling (╮°-°)╮┳━┳ : $(COLOR_RESET)$<"
-	@mkdir -p $(@D)
-	@gcc $(CFLAGS) -c $< -o $@
+SRCS_SERVER = server.c
+OBJ_SERVER = $(SRCS_SERVER:.c=.o)
 
-${SERVER}: ${OBJDIR}/server.o
-	@mkdir -p $(@D)
-	@$(MAKE) -C include/libft
-	@gcc $(CFLAGS) -o ${NAME} ${OBJECTS} -Linclude/libft include/libft/bin/libft.a
-	@printf "\n$(COLOR)$(KAOMOJI_SUCCESS) Successfully compiled SERVER!$(COLOR_RESET)"
+SRCS_CLIENT = client.c
+OBJ_CLIENT = $(SRCS_CLIENT:.c=.o)
 
-${CLIENT}: ${OBJDIR}/client.o
-	@mkdir -p $(@D)
-	@$(MAKE) -C include/libft
-	@gcc $(CFLAGS) -o ${NAME} ${OBJECTS} -Linclude/libft include/libft/bin/libft.a
-	@printf "\n$(COLOR)$(KAOMOJI_SUCCESS) Successfully compiled SERVER!$(COLOR_RESET)"
+SRCS_SERVER_BONUS = server_bonus.c
+OBJ_SERVER_BONUS = $(SRCS_SERVER_BONUS:.c=.o)
 
--include $(DEPS)
+SRCS_CLIENT_BONUS = client_bonus.c
+OBJ_CLIENT_BONUS = $(SRCS_CLIENT_BONUS:.c=.o)
 
-all: ${SERVER} ${CLIENT}
+.PHONY: all clean fclean re bonus
 
-fclean: clean
-	@rm -rf ${BINDIR}
-	@$(MAKE) -C include/libft fclean
+all: $(SERVER) $(CLIENT)
+
+$(LIBFT):
+	$(MAKE) -s -C $(LIBFT_PATH)
+
+$(SERVER): $(OBJ_SERVER) $(LIBFT)
+	$(CC) $(CFLAGS) $(OBJ_SERVER) -o $@ -L$(LIBFT_PATH) $(LIBFT_PATH)/bin/libft.a
+
+$(CLIENT): $(OBJ_CLIENT) $(LIBFT)
+	$(CC) $(CFLAGS) $(OBJ_CLIENT) -o $@ -L$(LIBFT_PATH) $(LIBFT_PATH)/bin/libft.a
+
+$(OBJ_SERVER): $(SRCS_SERVER)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJ_CLIENT): $(SRCS_CLIENT)
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	@echo "$(COLOR)$(KAOMOJI_REMOVE)$(COLOR_RESET)"
-	@rm -rf ${OBJDIR}
+	$(MAKE) clean -s -C $(LIBFT_PATH)
+	$(RM) $(OBJ_SERVER) $(OBJ_CLIENT)
+
+fclean: clean
+	$(MAKE) fclean -s -C $(LIBFT_PATH)
+	$(RM) $(SERVER) $(CLIENT) 
+	@echo "Clean del Client i del Servidor"
 
 re: fclean all
-
-pull: 
-	git submodule update --recursive --remote
-	@printf "\n$(COLOR)$(KAOMOJI_SUCCESS) Pull submodule success!$(COLOR_RESET)"
-	git pull
-
-git: fclean
-	git submodule update --recursive --remote
-	@echo "Pulled recursive"
-	@echo "Commit:"
-	@read MSG; \
-	git commit -am "$$MSG"
-	git push
-
-.PHONY: clean all fclean re git pull

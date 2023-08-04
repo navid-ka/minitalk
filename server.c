@@ -6,7 +6,7 @@
 /*   By: nkeyani- < nkeyani-@student.42barcelona    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 11:22:31 by nkeyani-          #+#    #+#             */
-/*   Updated: 2023/06/16 16:43:03 by nkeyani-         ###   ########.fr       */
+/*   Updated: 2023/08/04 18:15:41 by nkeyani-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	handler(int sig)
 
 	c = c << 1;
 	if (sig == SIGUSR1)
-		c =  c | 1;
+		c = c | 1;
 	octet++;
 	if (octet == 8)
 	{
@@ -35,7 +35,7 @@ void	handler(int sig)
 
 int	main(void)
 {
-	int	pid;
+	int					pid;
 	struct sigaction	sa;
 
 	sa.sa_handler = handler;
